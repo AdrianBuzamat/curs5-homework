@@ -6,6 +6,7 @@ import ro.fasttrackit.curs5homework.service.CountryService;
 import ro.fasttrackit.curs5homework.exception.ResourceNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("countries")
@@ -57,6 +58,10 @@ public class CountryController {
     @GetMapping(params = {"includeNeighbour", "excludeNeighbour"})
     public List<Country> getCountriesSelectedNeighbours(@RequestParam String includeNeighbour, @RequestParam String excludeNeighbour) {
         return service.getNeighboursBySelection(includeNeighbour, excludeNeighbour);
+    }
+@GetMapping("/continents/countries")
+    public Map<String, List<Country>> mapContinentToCountries(){
+        return service.mapContinentToCountries();
     }
 
 }

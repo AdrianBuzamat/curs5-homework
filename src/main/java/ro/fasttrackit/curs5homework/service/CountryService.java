@@ -1,11 +1,14 @@
 package ro.fasttrackit.curs5homework.service;
 
+import org.apache.el.lang.FunctionMapperImpl;
 import org.springframework.stereotype.Service;
 import ro.fasttrackit.curs5homework.model.Country;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,4 +71,10 @@ public class CountryService {
                 .filter(p -> !p.neighbours().contains(excludedNeighbour))
                 .collect(Collectors.toList());
     }
+
+    public Map<String, List<Country>> mapContinentToCountries(){
+        return countries.stream()
+                .collect(Collectors.groupingBy(Country::continent));
+    }
+
 }
