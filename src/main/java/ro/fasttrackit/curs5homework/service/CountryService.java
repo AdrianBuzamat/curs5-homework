@@ -39,13 +39,31 @@ public class CountryService {
                 .map(Country::population)
                 .findFirst();
     }
-//
-//- get countries in continent : /continents/<continentName>/countries -> returns list of Country objects
-//
+
     public List<Country> getCountriesByContinent(String name){
         return countries.stream()
                 .filter(country -> country.continent().equalsIgnoreCase(name))
                 .collect(Collectors.toList());
     }
-//- get country neighbours : /countries/<countryId>/neighbours -> returns list of Strings
+
+    public Optional<List<String>> getNeighboursById(int id){
+        return countries.stream()
+                .filter(country -> country.id()==id)
+                .map(Country::neighbours)
+                .findFirst();
+    }
+
+    public List<Country> getCountriesFromContinentByPopulation(String continent, long minPopulation) {
+        return countries.stream()
+                .filter(p -> p.continent().equalsIgnoreCase(continent))
+                .filter(p -> p.population() > minPopulation)
+                .collect(Collectors.toList());
+    }
+
+    public List<Country> getNeighboursBySelection(String includedNeighbour, String excludedNeighbour) {
+        return countries.stream()
+                .filter(p -> p.neighbours().contains(includedNeighbour))
+                .filter(p -> !p.neighbours().contains(excludedNeighbour))
+                .collect(Collectors.toList());
+    }
 }
