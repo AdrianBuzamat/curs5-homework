@@ -13,7 +13,9 @@ public class CountryService {
     private List<Country> countries;
 
     public CountryService(CountryProvider countryProvider) {
-        this.countries = new ArrayList<>(countryProvider.readCountries());
+        this.countries = Optional.ofNullable(countryProvider.readCountries())
+                .map(ArrayList::new)
+                .orElseGet(ArrayList::new);
     }
 
     public List<Country> getCountries() {
