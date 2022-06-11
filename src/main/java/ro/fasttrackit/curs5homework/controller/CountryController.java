@@ -30,9 +30,20 @@ public class CountryController {
     }
 
     @GetMapping({"{id}/capital"})
-    public String capialById(@PathVariable int id){
+    public String getCapialById(@PathVariable int id){
         return service.getCapitalById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Could not find country with id " + id));
+    }
+
+    @GetMapping({"{id}/population"})
+    public Long getPopulationById(@PathVariable int id){
+        return service.getPopulationById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Could not find country with id " + id));
+    }
+
+    @GetMapping("{continentName}/countries")
+    public List<Country> getCountriesByContinent(@PathVariable String continentName){
+        return service.getCountriesByContinent(continentName);
     }
 
 }

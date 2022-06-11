@@ -20,23 +20,32 @@ public class CountryService {
         return countries;
     }
 
-    public List<String> getAllCountriesName(){
+    public List<String> getAllCountriesName() {
         return countries.stream()
-                .map(country -> country.name())
+                .map(Country::name)
                 .collect(Collectors.toList());
     }
-//
-//- get capital of a country : /countries/<countryId>/capital -> returns a string
-    public Optional<String> getCapitalById(int id){
+
+    public Optional<String> getCapitalById(int id) {
         return countries.stream()
-                .filter(country -> country.id()==id)
+                .filter(country -> country.id() == id)
                 .map(Country::capital)
                 .findFirst();
     }
-//
-//- get population of a country : /countries/<countryId>/population -> returns a long
+
+    public Optional<Long> getPopulationById(int id) {
+        return countries.stream()
+                .filter(country -> country.id() == id)
+                .map(Country::population)
+                .findFirst();
+    }
 //
 //- get countries in continent : /continents/<continentName>/countries -> returns list of Country objects
 //
+    public List<Country> getCountriesByContinent(String name){
+        return countries.stream()
+                .filter(country -> country.continent().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
+    }
 //- get country neighbours : /countries/<countryId>/neighbours -> returns list of Strings
 }
