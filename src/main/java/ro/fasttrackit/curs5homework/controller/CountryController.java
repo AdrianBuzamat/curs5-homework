@@ -18,36 +18,36 @@ public class CountryController {
     }
 
     @GetMapping()
-    public List<Country> getAllCountries(){
+    public List<Country> getAllCountries() {
         return service.getCountries();
     }
 
     @GetMapping("/names")
-    public List<String> getAllCountriesName(){
+    public List<String> getAllCountriesName() {
         return service.getAllCountriesName();
     }
 
     @GetMapping({"{id}/capital"})
-    public String getCapialById(@PathVariable int id){
+    public String getCapialById(@PathVariable int id) {
         return service.getCapitalById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Could not find country with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find country with id " + id));
     }
 
     @GetMapping({"{id}/population"})
-    public Long getPopulationById(@PathVariable int id){
+    public Long getPopulationById(@PathVariable int id) {
         return service.getPopulationById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Could not find country with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find country with id " + id));
     }
 
     @GetMapping("{continentName}/countries")
-    public List<Country> getCountriesByContinent(@PathVariable String continentName){
+    public List<Country> getCountriesByContinent(@PathVariable String continentName) {
         return service.getCountriesByContinent(continentName);
     }
 
     @GetMapping({"{id}/neighbours"})
-    public List<String> getNeighboursById(@PathVariable int id){
+    public List<String> getNeighboursById(@PathVariable int id) {
         return service.getNeighboursById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Could not find country with id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find country with id " + id));
     }
 
     @GetMapping(value = "{continentName}/countries", params = {"minPopulation"})
@@ -59,8 +59,14 @@ public class CountryController {
     public List<Country> getCountriesSelectedNeighbours(@RequestParam String includeNeighbour, @RequestParam String excludeNeighbour) {
         return service.getNeighboursBySelection(includeNeighbour, excludeNeighbour);
     }
-@GetMapping("/continents/countries")
-    public Map<String, List<Country>> mapContinentToCountries(){
+
+    @GetMapping("/population")
+    public Map<String, Long> mapCountriesToPopulation() {
+        return service.mapCountriesToPopulation();
+    }
+
+    @GetMapping("/continents/countries")
+    public Map<String, List<Country>> mapContinentToCountries() {
         return service.mapContinentToCountries();
     }
 

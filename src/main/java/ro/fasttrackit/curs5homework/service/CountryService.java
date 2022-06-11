@@ -72,6 +72,13 @@ public class CountryService {
                 .collect(Collectors.toList());
     }
 
+  //  get map from country to population : /countries/population -> returns map from String to Long
+
+    public Map<String, Long> mapCountriesToPopulation(){
+        return countries.stream()
+                .collect(Collectors.toMap(Country::name, Country::population));
+    }
+
     public Map<String, List<Country>> mapContinentToCountries(){
         return countries.stream()
                 .collect(Collectors.groupingBy(Country::continent));
